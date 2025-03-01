@@ -1,4 +1,7 @@
 databaseChangeLog:
+  - includeAll:
+      path: sql/
+      relativeToChangelogFile: true
   - preConditions:
       - runningAs:
-          username: myuser
+          username: test_user

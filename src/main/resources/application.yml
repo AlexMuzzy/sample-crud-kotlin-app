@@ -4,3 +4,10 @@ spring:
   data:
     jdbc:
       dialect: h2
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
+      username: test_user
+      password: test_password
+      jdbc-url: jdbc:postgresql://localhost:5432/test_db
