@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: testapp
+  data:
+    jdbc:
+      dialect: h2
