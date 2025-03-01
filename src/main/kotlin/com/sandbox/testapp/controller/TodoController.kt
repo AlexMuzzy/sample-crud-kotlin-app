@@ -54,7 +54,7 @@ class TodoController(private val todoService: TodoService) {
         return try {
             val updatedTodo = todoService.updateTodo(id, todoDetails)
             ResponseEntity(updatedTodo, HttpStatus.OK)
-        } catch (e: RuntimeException) {
+        } catch (_: RuntimeException) {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
@@ -64,7 +64,7 @@ class TodoController(private val todoService: TodoService) {
         return try {
             val completedTodo = todoService.markTodoAsCompleted(id)
             ResponseEntity(completedTodo, HttpStatus.OK)
-        } catch (e: RuntimeException) {
+        } catch (_: RuntimeException) {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
@@ -74,7 +74,7 @@ class TodoController(private val todoService: TodoService) {
         return try {
             todoService.deleteTodo(id)
             ResponseEntity(HttpStatus.NO_CONTENT)
-        } catch (e: RuntimeException) {
+        } catch (_: RuntimeException) {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
     }
