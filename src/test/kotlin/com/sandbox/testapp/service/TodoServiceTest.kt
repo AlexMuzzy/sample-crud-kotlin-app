@@ -4,9 +4,11 @@ import com.sandbox.testapp.model.Todo
 import com.sandbox.testapp.repository.TodoRepository
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.ArgumentMatchers.any
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.times
 import org.mockito.junit.jupiter.MockitoExtension
 import java.time.LocalDateTime
 import java.util.Optional
@@ -35,7 +37,7 @@ class TodoServiceTest {
         // Act
         val result = todoService.createTodo(todo)
         // Assert
-        Mockito.verify(todoRepository, Mockito.times(1)).save(todo)
+        Mockito.verify(todoRepository, times(1)).save(todo)
         assertNotNull(result.createdAt)
         assertNotNull(result.updatedAt)
     }
@@ -55,7 +57,7 @@ class TodoServiceTest {
         // Assert
         assertEquals(2, result.size)
         assertEquals(todoList, result)
-        Mockito.verify(todoRepository, Mockito.times(1)).findAll()
+        Mockito.verify(todoRepository, times(1)).findAll()
     }
 
     @Test
@@ -73,7 +75,7 @@ class TodoServiceTest {
         // Assert
         assertEquals(2, result.size)
         assertTrue(result.all { it.completed })
-        Mockito.verify(todoRepository, Mockito.times(1)).findByCompleted(true)
+        Mockito.verify(todoRepository, times(1)).findByCompleted(true)
     }
 
     @Test
@@ -92,7 +94,7 @@ class TodoServiceTest {
         // Assert
         assertEquals(2, result.size)
         assertTrue(result.all { it.title.contains(searchTerm, ignoreCase = true) })
-        Mockito.verify(todoRepository, Mockito.times(1)).findByTitleContainingIgnoreCase(searchTerm)
+        Mockito.verify(todoRepository, times(1)).findByTitleContainingIgnoreCase(searchTerm)
     }
 
     @Test
@@ -108,7 +110,7 @@ class TodoServiceTest {
         // Assert
         assertTrue(result.isPresent)
         assertEquals(todoId, result.get().id)
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
     }
 
     @Test
@@ -122,7 +124,7 @@ class TodoServiceTest {
 
         // Assert
         assertFalse(result.isPresent)
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
     }
 
     @Test
@@ -162,8 +164,8 @@ class TodoServiceTest {
         assertEquals("Updated Description", result.description)
         assertTrue(result.completed)
         assertNotNull(result.updatedAt)
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
-        Mockito.verify(todoRepository, Mockito.times(1)).save(any(Todo::class.java))
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).save(any(Todo::class.java))
     }
 
     @Test
@@ -184,7 +186,7 @@ class TodoServiceTest {
             todoService.updateTodo(todoId, updatedDetails)
         }
 
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
         Mockito.verify(todoRepository, Mockito.never()).save(any(Todo::class.java))
     }
 
@@ -216,8 +218,8 @@ class TodoServiceTest {
         // Assert
         assertTrue(result.completed)
         assertNotNull(result.updatedAt)
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
-        Mockito.verify(todoRepository, Mockito.times(1)).save(any(Todo::class.java))
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).save(any(Todo::class.java))
     }
 
     @Test
@@ -231,7 +233,7 @@ class TodoServiceTest {
             todoService.markTodoAsCompleted(todoId)
         }
 
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
         Mockito.verify(todoRepository, Mockito.never()).save(any(Todo::class.java))
     }
 
@@ -252,8 +254,8 @@ class TodoServiceTest {
         todoService.deleteTodo(todoId)
 
         // Assert
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
-        Mockito.verify(todoRepository, Mockito.times(1)).delete(todo)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).delete(todo)
     }
 
     @Test
@@ -267,10 +269,7 @@ class TodoServiceTest {
             todoService.deleteTodo(todoId)
         })
 
-        Mockito.verify(todoRepository, Mockito.times(1)).findById(todoId)
+        Mockito.verify(todoRepository, times(1)).findById(todoId)
         Mockito.verify(todoRepository, Mockito.never()).delete(any(Todo::class.java))
     }
-
-    // Helper method for matching any Todo object
-    private fun <T> any(type: Class<T>): T = Mockito.any(type)
 }
