@@ -1,11 +1,11 @@
 --liquibase formatted sql
 
 --changeset author:todos-1
-CREATE SEQUENCE todos_id_seq;
+CREATE SEQUENCE todos_seq;
 
 CREATE TABLE todos
 (
-    id          BIGINT PRIMARY KEY DEFAULT nextval('todos_id_seq'),
+    id          BIGINT PRIMARY KEY DEFAULT nextval('todos_seq'),
     title       VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     completed   BOOLEAN      NOT NULL,
@@ -13,4 +13,4 @@ CREATE TABLE todos
     updated_at  TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 --rollback DROP TABLE todos;
---rollback DROP SEQUENCE todos_id_seq;
+--rollback DROP SEQUENCE todos_seq;

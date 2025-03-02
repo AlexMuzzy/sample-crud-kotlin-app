@@ -7,7 +7,8 @@ import java.time.LocalDateTime
 @Table(name = "todos")
 class Todo(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todo_generator")
+    @SequenceGenerator(name = "todo_generator", sequenceName = "todos_seq", allocationSize = 1)
     var id: Long? = null,
 
     @Column(nullable = false)
